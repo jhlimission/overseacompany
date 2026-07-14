@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>국외창업기업, 무엇이든 물어보세요 — 질문 수집 (Mock)</title>
+<style>
+  :root{
+    --navy:#1B3A6B;
+    --navy-deep:#122A50;
+    --ink:#1A1D26;
+    --gray:#6B7280;
+    --line:#D9DFE8;
+    --bg:#F7F9FC;
+    --gold:#C9A227;
+    --white:#FFFFFF;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",-apple-system,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    display:flex;
+    flex-direction:column;
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ── top bar ── */
+  header{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:18px 28px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--gray);letter-spacing:.02em}
+  .brand .logo{
+    width:26px;height:26px;border-radius:6px;background:var(--navy);
+    display:inline-flex;align-items:center;justify-content:center;
+    color:#fff;font-weight:800;font-size:12px;
+  }
+  .badge{
+    font-size:11px;color:var(--navy);border:1px solid var(--line);
+    background:#fff;border-radius:999px;padding:5px 12px;letter-spacing:.04em;
+  }
+
+  /* ── hero ── */
+  main{flex:1;display:flex;align-items:center;justify-content:center;padding:24px 20px 48px}
+  .stage{width:100%;max-width:680px;text-align:center}
+
+  .eyebrow{
+    font-size:12px;letter-spacing:.22em;color:var(--gold);
+    font-weight:700;margin-bottom:14px;
+  }
+  h1{
+    font-size:clamp(26px,4.6vw,40px);
+    font-weight:800;letter-spacing:-0.02em;line-height:1.25;
+    color:var(--navy-deep);
+  }
+  h1 .ask{color:var(--navy)}
+  .lede{
+    margin:14px auto 34px;max-width:480px;
+    font-size:14.5px;line-height:1.7;color:var(--gray);
+  }
+
+  /* ── the search-bar-like question box ── */
+  .qbox{
+    position:relative;text-align:left;
+    background:var(--white);
+    border:1.5px solid var(--line);
+    border-radius:28px;
+    box-shadow:0 1px 2px rgba(18,42,80,.04);
+    transition:box-shadow .2s,border-color .2s,border-radius .2s;
+  }
+  .qbox:focus-within{
+    border-color:var(--navy);
+    border-radius:18px;
+    box-shadow:0 8px 28px rgba(18,42,80,.12);
+  }
+  .qbox .icon{
+    position:absolute;left:20px;top:17px;color:var(--navy);opacity:.75;
+  }
+  .qbox textarea{
+    width:100%;border:0;outline:0;resize:none;background:transparent;
+    font:inherit;font-size:16px;line-height:1.6;color:var(--ink);
+    padding:16px 22px 16px 52px;
+    min-height:56px;max-height:220px;
+  }
+  .qbox textarea::placeholder{color:#9AA3B2}
+  .count{
+    position:absolute;right:18px;bottom:10px;font-size:11px;color:#B4BCC9;
+  }
+
+  /* sample question chips */
+  .chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:16px}
+  .chip{
+    font-size:12.5px;color:var(--navy);background:#fff;border:1px solid var(--line);
+    border-radius:999px;padding:7px 14px;cursor:pointer;transition:all .15s;
+  }
+  .chip:hover{border-color:var(--navy);background:#F0F4FB}
+  .chip:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
+
+  /* ── detail form (인적사항 + 동의) ── */
+  .details{
+    margin-top:28px;text-align:left;
+    background:var(--white);border:1px solid var(--line);border-radius:16px;
+    padding:22px 22px 20px;
+  }
+  .fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .fields .full{grid-column:1/-1}
+  .field label{
+    display:block;font-size:11.5px;font-weight:700;color:var(--navy);
+    letter-spacing:.06em;margin-bottom:6px;
+  }
+  .field label .opt{font-weight:400;color:#9AA3B2;letter-spacing:0}
+  .field input{
+    width:100%;font:inherit;font-size:14px;color:var(--ink);
+    border:1px solid var(--line);border-radius:10px;background:#FBFCFE;
+    padding:11px 12px;outline:0;transition:border-color .15s;
+  }
+  .field input:focus{border-color:var(--navy);background:#fff}
+
+  .consent{
+    margin-top:16px;border-top:1px dashed var(--line);padding-top:14px;
+  }
+  .consent-row{display:flex;align-items:flex-start;gap:10px}
+  .consent-row input[type=checkbox]{
+    width:17px;height:17px;margin-top:2px;accent-color:var(--navy);cursor:pointer;flex:none;
+  }
+  .consent-row label{font-size:13.5px;line-height:1.55;color:var(--ink);cursor:pointer}
+  .consent-row .req{color:#C0392B;font-weight:700}
+  details.policy{margin-top:10px;margin-left:27px}
+  details.policy summary{
+    font-size:12px;color:var(--gray);cursor:pointer;user-select:none;
+  }
+  details.policy summary:hover{color:var(--navy)}
+  .policy-body{
+    margin-top:8px;font-size:12px;line-height:1.7;color:var(--gray);
+    background:#F6F8FB;border-radius:10px;padding:12px 14px;
+  }
+  .policy-body b{color:var(--ink)}
+
+  /* ── submit ── */
+  .actions{margin-top:20px;display:flex;align-items:center;justify-content:center;gap:14px}
+  .submit{
+    font:inherit;font-size:15px;font-weight:700;color:#fff;
+    background:var(--navy);border:0;border-radius:999px;
+    padding:13px 42px;cursor:pointer;letter-spacing:.02em;
+    transition:background .15s,transform .1s,opacity .15s;
+  }
+  .submit:hover:not(:disabled){background:var(--navy-deep)}
+  .submit:active:not(:disabled){transform:scale(.98)}
+  .submit:disabled{opacity:.35;cursor:not-allowed}
+  .hint{font-size:12px;color:#9AA3B2}
+
+  /* ── success state ── */
+  .done{display:none;padding:56px 20px;text-align:center}
+  .done .mark{
+    width:56px;height:56px;border-radius:50%;background:var(--navy);
+    color:#fff;font-size:26px;display:inline-flex;align-items:center;justify-content:center;
+    margin-bottom:18px;
+  }
+  .done h2{font-size:22px;font-weight:800;color:var(--navy-deep);margin-bottom:10px}
+  .done p{font-size:14px;color:var(--gray);line-height:1.7}
+  .done .again{
+    margin-top:22px;display:inline-block;font-size:13.5px;font-weight:600;
+    color:var(--navy);background:none;border:1px solid var(--line);border-radius:999px;
+    padding:10px 24px;cursor:pointer;font-family:inherit;
+  }
+  .done .again:hover{border-color:var(--navy)}
+
+  footer{
+    padding:18px 28px;display:flex;justify-content:space-between;align-items:center;
+    font-size:11.5px;color:#9AA3B2;border-top:1px solid var(--line);background:#fff;
+  }
+  footer .mock{color:var(--gold);font-weight:700;letter-spacing:.08em}
+
+  @media (max-width:560px){
+    .fields{grid-template-columns:1fr}
+    header{padding:14px 18px}
+    footer{flex-direction:column;gap:6px;text-align:center}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none!important}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <span class="logo">M</span>
+    <span>법무법인 미션 · UKF Korea</span>
+  </div>
+  <span class="badge">국외창업기업 정책연구 · 의견수렴</span>
+</header>
+
+<main>
+  <div class="stage" id="formStage">
+    <div class="eyebrow">ASK ANYTHING · 국외창업기업</div>
+    <h1>국외창업기업,<br><span class="ask">무엇이든 물어보세요</span></h1>
+    <p class="lede">
+      플립, 해외 법인 설립·운영, 비자, 세무, 정부지원사업 —
+      현장에서 궁금했던 것을 남겨주세요. 수합된 질문은 정책 제언과 가이드북에 반영됩니다.
+    </p>
+
+    <!-- 질문 입력: 구글 검색창 스타일 -->
+    <div class="qbox">
+      <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+        <circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.5" y2="16.5"></line>
+      </svg>
+      <textarea id="question" rows="1" maxlength="1000"
+        placeholder="질문 또는 의견을 입력하세요"
+        aria-label="질문 또는 의견 입력"></textarea>
+      <span class="count" id="count">0 / 1000</span>
+    </div>
+
+    <div class="chips" aria-label="질문 예시">
+      <button class="chip" type="button">플립 이후에도 TIPS를 받을 수 있나요?</button>
+      <button class="chip" type="button">델라웨어 법인의 한국 세무 신고 의무는?</button>
+      <button class="chip" type="button">대표 단독 미국 이주, 어떤 비자가 맞나요?</button>
+      <button class="chip" type="button">스톡옵션을 미국 모회사 기준으로 부여하려면?</button>
+    </div>
+
+    <!-- 인적사항 + 동의 -->
+    <div class="details">
+      <div class="fields">
+        <div class="field"><label for="name">이름 <span class="opt">필수</span></label>
+          <input id="name" type="text" placeholder="홍길동" autocomplete="name"></div>
+        <div class="field"><label for="org">소속 <span class="opt">필수</span></label>
+          <input id="org" type="text" placeholder="주식회사 OOO / 예비창업자" autocomplete="organization"></div>
+        <div class="field full"><label for="email">이메일 <span class="opt">필수 · 답변 및 결과 공유용</span></label>
+          <input id="email" type="email" placeholder="name@company.com" autocomplete="email"></div>
+      </div>
+
+      <div class="consent">
+        <div class="consent-row">
+          <input type="checkbox" id="agree">
+          <label for="agree"><span class="req">[필수]</span> 개인정보 수집·이용에 동의합니다.</label>
+        </div>
+        <details class="policy">
+          <summary>수집 항목 및 이용 목적 보기</summary>
+          <div class="policy-body">
+            <b>수집 항목:</b> 이름, 소속, 이메일, 질문 내용<br>
+            <b>수집 목적:</b> 국외창업기업 관련 의견 수렴, 질의 답변, 정책연구 보고서 작성(통계·비식별 처리)<br>
+            <b>보유 기간:</b> 수집일로부터 O년 또는 목적 달성 시까지, 이후 지체 없이 파기<br>
+            <b>동의 거부 권리:</b> 동의를 거부할 수 있으나, 거부 시 질문 제출이 제한됩니다.<br>
+            <span style="color:#C0392B">※ 목업용 예시 문구 — 실제 문구는 개인정보처리방침 확정 후 반영</span>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="submit" id="submit" disabled>질문 제출하기</button>
+    </div>
+    <p class="hint" style="margin-top:12px">질문·필수 항목 입력과 동의 체크 후 제출할 수 있습니다.</p>
+  </div>
+
+  <!-- 제출 완료 -->
+  <div class="stage done" id="doneStage">
+    <div class="mark">✓</div>
+    <h2>질문이 접수되었습니다</h2>
+    <p>남겨주신 질문은 검토 후 정책연구와 가이드북에 반영되며,<br>
+       개별 답변이 가능한 경우 입력하신 이메일로 안내드립니다.</p>
+    <button class="again" id="again">다른 질문 남기기</button>
+  </div>
+</main>
+
+<footer>
+  <span>© 법무법인 미션 · 본 페이지는 국외창업기업 정책연구 과업의 일환으로 운영됩니다.</span>
+  <span class="mock">FRONT-PAGE MOCK v0.1 — 개발팀 검토용</span>
+</footer>
+
+<script>
+  const q = document.getElementById('question');
+  const count = document.getElementById('count');
+  const agree = document.getElementById('agree');
+  const submit = document.getElementById('submit');
+  const name = document.getElementById('name');
+  const org = document.getElementById('org');
+  const email = document.getElementById('email');
+
+  // 검색창 → 질문창으로 자연스럽게 확장
+  function autosize(){
+    q.style.height = 'auto';
+    q.style.height = Math.min(q.scrollHeight, 220) + 'px';
+    count.textContent = q.value.length + ' / 1000';
+  }
+  q.addEventListener('input', () => { autosize(); validate(); });
+
+  // 예시 칩 클릭 → 입력창 채움
+  document.querySelectorAll('.chip').forEach(c => c.addEventListener('click', () => {
+    q.value = c.textContent;
+    autosize(); validate(); q.focus();
+  }));
+
+  [name, org, email, agree].forEach(el => el.addEventListener('input', validate));
+  agree.addEventListener('change', validate);
+
+  function validate(){
+    const ok = q.value.trim().length > 0
+      && name.value.trim() && org.value.trim()
+      && /.+@.+\..+/.test(email.value)
+      && agree.checked;
+    submit.disabled = !ok;
+  }
+
+  // 목업: 실제로는 POST /api/questions → DB 저장
+  submit.addEventListener('click', () => {
+    document.getElementById('formStage').style.display = 'none';
+    const done = document.getElementById('doneStage');
+    done.style.display = 'block';
+  });
+
+  document.getElementById('again').addEventListener('click', () => {
+    document.getElementById('doneStage').style.display = 'none';
+    document.getElementById('formStage').style.display = 'block';
+    q.value = ''; agree.checked = false; autosize(); validate();
+  });
+
+  autosize();
+</script>
+</body>
+</html>
