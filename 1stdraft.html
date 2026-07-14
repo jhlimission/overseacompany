@@ -25,6 +25,8 @@
     flex-direction:column;
     min-height:100vh;
     -webkit-font-smoothing:antialiased;
+    word-break:keep-all;
+    overflow-wrap:break-word;
   }
 
   /* ── top bar ── */
@@ -34,23 +36,16 @@
   }
   .brand{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--gray);letter-spacing:.02em}
   .brand .logo{
-    width:26px;height:26px;border-radius:6px;background:var(--navy);
+    height:50px;border-radius:6px;
     display:inline-flex;align-items:center;justify-content:center;
-    color:#fff;font-weight:800;font-size:12px;
+    padding:5px 9px;
   }
-  .badge{
-    font-size:11px;color:var(--navy);border:1px solid var(--line);
-    background:#fff;border-radius:999px;padding:5px 12px;letter-spacing:.04em;
-  }
-
+  .brand .logo img{height:100%;width:auto;display:block}
+  
   /* ── hero ── */
   main{flex:1;display:flex;align-items:center;justify-content:center;padding:24px 20px 48px}
   .stage{width:100%;max-width:680px;text-align:center}
 
-  .eyebrow{
-    font-size:12px;letter-spacing:.22em;color:var(--gold);
-    font-weight:700;margin-bottom:14px;
-  }
   h1{
     font-size:clamp(26px,4.6vw,40px);
     font-weight:800;letter-spacing:-0.02em;line-height:1.25;
@@ -58,32 +53,34 @@
   }
   h1 .ask{color:var(--navy)}
   .lede{
-    margin:14px auto 34px;max-width:480px;
-    font-size:14.5px;line-height:1.7;color:var(--gray);
+    margin:14px auto 34px;max-width:600px;
+    font-size:18px;line-height:1.7;
+    text-align:left;
   }
 
-  /* ── the search-bar-like question box ── */
+  /* ── question box ── */
+  .qlabel{
+    display:block;text-align:left;font-size:11.5px;font-weight:700;color:var(--navy);
+    letter-spacing:.06em;margin-bottom:6px;
+  }
+  .qlabel .opt{font-weight:400;color:#9AA3B2;letter-spacing:0}
   .qbox{
     position:relative;text-align:left;
     background:var(--white);
     border:1.5px solid var(--line);
-    border-radius:28px;
+    border-radius:16px;
     box-shadow:0 1px 2px rgba(18,42,80,.04);
-    transition:box-shadow .2s,border-color .2s,border-radius .2s;
+    transition:box-shadow .2s,border-color .2s;
   }
   .qbox:focus-within{
     border-color:var(--navy);
-    border-radius:18px;
     box-shadow:0 8px 28px rgba(18,42,80,.12);
-  }
-  .qbox .icon{
-    position:absolute;left:20px;top:17px;color:var(--navy);opacity:.75;
   }
   .qbox textarea{
     width:100%;border:0;outline:0;resize:none;background:transparent;
     font:inherit;font-size:16px;line-height:1.6;color:var(--ink);
-    padding:16px 22px 16px 52px;
-    min-height:56px;max-height:220px;
+    padding:16px 22px 28px;
+    min-height:120px;max-height:320px;
   }
   .qbox textarea::placeholder{color:#9AA3B2}
   .count{
@@ -93,7 +90,7 @@
   /* sample question chips */
   .chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:16px}
   .chip{
-    font-size:12.5px;color:var(--navy);background:#fff;border:1px solid var(--line);
+    font-size:13.5px;color:var(--navy);background:#fff;border:1px solid var(--line);
     border-radius:999px;padding:7px 14px;cursor:pointer;transition:all .15s;
   }
   .chip:hover{border-color:var(--navy);background:#F0F4FB}
@@ -113,7 +110,7 @@
   }
   .field label .opt{font-weight:400;color:#9AA3B2;letter-spacing:0}
   .field input{
-    width:100%;font:inherit;font-size:14px;color:var(--ink);
+    width:100%;font:inherit;font-size:15px;color:var(--ink);
     border:1px solid var(--line);border-radius:10px;background:#FBFCFE;
     padding:11px 12px;outline:0;transition:border-color .15s;
   }
@@ -126,7 +123,7 @@
   .consent-row input[type=checkbox]{
     width:17px;height:17px;margin-top:2px;accent-color:var(--navy);cursor:pointer;flex:none;
   }
-  .consent-row label{font-size:13.5px;line-height:1.55;color:var(--ink);cursor:pointer}
+  .consent-row label{font-size:14.5px;line-height:1.55;color:var(--ink);cursor:pointer}
   .consent-row .req{color:#C0392B;font-weight:700}
   details.policy{margin-top:10px;margin-left:27px}
   details.policy summary{
@@ -142,7 +139,7 @@
   /* ── submit ── */
   .actions{margin-top:20px;display:flex;align-items:center;justify-content:center;gap:14px}
   .submit{
-    font:inherit;font-size:15px;font-weight:700;color:#fff;
+    font:inherit;font-size:20px;font-weight:700;color:#fff;
     background:var(--navy);border:0;border-radius:999px;
     padding:13px 42px;cursor:pointer;letter-spacing:.02em;
     transition:background .15s,transform .1s,opacity .15s;
@@ -176,7 +173,7 @@
 
   @media (max-width:560px){
     .fields{grid-template-columns:1fr}
-    header{padding:14px 18px}
+    header{padding:14px 18px;justify-content:center}
     footer{flex-direction:column;gap:6px;text-align:center}
   }
   @media (prefers-reduced-motion:reduce){
@@ -188,37 +185,26 @@
 
 <header>
   <div class="brand">
-    <span class="logo">M</span>
-    <span>법무법인 미션 · UKF Korea</span>
+    <span class="logo"><img src="https://dgfud47pzj6gr.cloudfront.net/wp-content/uploads/2024/08/09015349/logo_blue-202408.png" alt="법무법인 미션 로고"></span>
   </div>
-  <span class="badge">국외창업기업 정책연구 · 의견수렴</span>
+  
 </header>
 
 <main>
   <div class="stage" id="formStage">
-    <div class="eyebrow">ASK ANYTHING · 국외창업기업</div>
     <h1>국외창업기업,<br><span class="ask">무엇이든 물어보세요</span></h1>
     <p class="lede">
-      플립, 해외 법인 설립·운영, 비자, 세무, 정부지원사업 —
-      현장에서 궁금했던 것을 남겨주세요. 수합된 질문은 정책 제언과 가이드북에 반영됩니다.
+      한국 스타트업의 글로벌 진출을 지원하는 스타트업 전문 로펌 '법무법인 미션'은 국외창업기업 제도 개선을 위한 정책연구를 수행하고 있습니다.</p>
+    <p class="lede">
+      그 일환으로 국외창업기업 확인·지원 제도 전반에 관한 질의사항 또는 의견을 모집합니다. 플립, 해외 법인 설립·운영, 비자, 세무 등 제도 운영 과정에서 마주하신 어려움도 남겨주세요. 보내주신 의견은 관계 부처에 대한 정책 제언 및 「국외창업기업 확인 가이드」고도화에 반영됩니다.
     </p>
 
-    <!-- 질문 입력: 구글 검색창 스타일 -->
+    <!-- 질문 입력 -->
     <div class="qbox">
-      <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
-        <circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.5" y2="16.5"></line>
-      </svg>
-      <textarea id="question" rows="1" maxlength="1000"
-        placeholder="질문 또는 의견을 입력하세요"
+      <textarea id="question" rows="4" maxlength="1000"
+        placeholder="궁금하신 내용이나 의견을 자유롭게 작성해 주세요"
         aria-label="질문 또는 의견 입력"></textarea>
       <span class="count" id="count">0 / 1000</span>
-    </div>
-
-    <div class="chips" aria-label="질문 예시">
-      <button class="chip" type="button">플립 이후에도 TIPS를 받을 수 있나요?</button>
-      <button class="chip" type="button">델라웨어 법인의 한국 세무 신고 의무는?</button>
-      <button class="chip" type="button">대표 단독 미국 이주, 어떤 비자가 맞나요?</button>
-      <button class="chip" type="button">스톡옵션을 미국 모회사 기준으로 부여하려면?</button>
     </div>
 
     <!-- 인적사항 + 동의 -->
@@ -251,9 +237,8 @@
     </div>
 
     <div class="actions">
-      <button class="submit" id="submit" disabled>질문 제출하기</button>
+      <button class="submit" id="submit" disabled>제출하기</button>
     </div>
-    <p class="hint" style="margin-top:12px">질문·필수 항목 입력과 동의 체크 후 제출할 수 있습니다.</p>
   </div>
 
   <!-- 제출 완료 -->
@@ -280,10 +265,9 @@
   const org = document.getElementById('org');
   const email = document.getElementById('email');
 
-  // 검색창 → 질문창으로 자연스럽게 확장
   function autosize(){
     q.style.height = 'auto';
-    q.style.height = Math.min(q.scrollHeight, 220) + 'px';
+    q.style.height = Math.min(q.scrollHeight, 320) + 'px';
     count.textContent = q.value.length + ' / 1000';
   }
   q.addEventListener('input', () => { autosize(); validate(); });
