@@ -14,6 +14,7 @@
     --bg:#F7F9FC;
     --gold:#C9A227;
     --white:#FFFFFF;
+    --error:#C0392B;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{height:100%}
@@ -41,7 +42,7 @@
     padding:5px 9px;
   }
   .brand .logo img{height:100%;width:auto;display:block}
-  
+
   /* ── hero ── */
   main{flex:1;display:flex;align-items:center;justify-content:center;padding:24px 20px 48px}
   .stage{width:100%;max-width:680px;text-align:center}
@@ -54,16 +55,11 @@
   h1 .ask{color:var(--navy)}
   .lede{
     margin:14px auto 34px;max-width:600px;
-    font-size:18px;line-height:1.7;
+    font-size:16px;line-height:1.7;
     text-align:left;
   }
 
   /* ── question box ── */
-  .qlabel{
-    display:block;text-align:left;font-size:11.5px;font-weight:700;color:var(--navy);
-    letter-spacing:.06em;margin-bottom:6px;
-  }
-  .qlabel .opt{font-weight:400;color:#9AA3B2;letter-spacing:0}
   .qbox{
     position:relative;text-align:left;
     background:var(--white);
@@ -87,34 +83,57 @@
     position:absolute;right:18px;bottom:10px;font-size:11px;color:#B4BCC9;
   }
 
-  /* sample question chips */
-  .chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:16px}
-  .chip{
-    font-size:13.5px;color:var(--navy);background:#fff;border:1px solid var(--line);
-    border-radius:999px;padding:7px 14px;cursor:pointer;transition:all .15s;
-  }
-  .chip:hover{border-color:var(--navy);background:#F0F4FB}
-  .chip:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
-
-  /* ── detail form (인적사항 + 동의) ── */
+  /* ── detail form (기업단계 + 인적사항 + 동의) ── */
   .details{
     margin-top:28px;text-align:left;
     background:var(--white);border:1px solid var(--line);border-radius:16px;
     padding:22px 22px 20px;
   }
+
+  /* 기업단계 라디오 칩 */
+  .stagepick{border:0;margin-bottom:18px}
+  .stagepick legend{
+    font-size:1em;font-weight:700;color:var(--navy);
+    letter-spacing:.06em;margin-bottom:8px;
+  }
+  .stagepick legend .opt{font-weight:400;color:#9AA3B2;letter-spacing:0;font-size:0.9em;}
+  .stage-chips{display:flex;flex-wrap:wrap;gap:8px}
+  .stage-chips input[type=radio]{
+    position:absolute;width:1px;height:1px;overflow:hidden;
+    clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;
+  }
+  .stage-chips label{
+    font-size:13.5px;color:var(--navy);background:#fff;border:1px solid var(--line);
+    border-radius:999px;padding:8px 15px;cursor:pointer;transition:all .15s;user-select:none;
+  }
+  .stage-chips label:hover{border-color:var(--navy);background:#F0F4FB}
+  .stage-chips input[type=radio]:checked + label{
+    background:var(--navy);border-color:var(--navy);color:#fff;font-weight:600;
+  }
+  .stage-chips input[type=radio]:focus-visible + label{
+    outline:2px solid var(--navy);outline-offset:2px;
+  }
+
   .fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}
   .fields .full{grid-column:1/-1}
   .field label{
-    display:block;font-size:11.5px;font-weight:700;color:var(--navy);
+    display:block;font-size:1em;font-weight:700;color:var(--navy);
     letter-spacing:.06em;margin-bottom:6px;
   }
-  .field label .opt{font-weight:400;color:#9AA3B2;letter-spacing:0}
+  .field label .opt{font-weight:400;color:#9AA3B2;letter-spacing:0;font-size:0.9em;}
   .field input{
     width:100%;font:inherit;font-size:15px;color:var(--ink);
     border:1px solid var(--line);border-radius:10px;background:#FBFCFE;
     padding:11px 12px;outline:0;transition:border-color .15s;
+    font-size:0.9em;
   }
   .field input:focus{border-color:var(--navy);background:#fff}
+
+  /* 허니팟: 사람 눈과 포커스 흐름에서 완전히 제외 */
+  .hp-field{
+    position:absolute!important;left:-9999px!important;top:auto!important;
+    width:1px;height:1px;overflow:hidden;
+  }
 
   .consent{
     margin-top:16px;border-top:1px dashed var(--line);padding-top:14px;
@@ -137,7 +156,7 @@
   .policy-body b{color:var(--ink)}
 
   /* ── submit ── */
-  .actions{margin-top:20px;display:flex;align-items:center;justify-content:center;gap:14px}
+  .actions{margin-top:20px;display:flex;flex-direction:column;align-items:center;gap:10px}
   .submit{
     font:inherit;font-size:20px;font-weight:700;color:#fff;
     background:var(--navy);border:0;border-radius:999px;
@@ -147,7 +166,17 @@
   .submit:hover:not(:disabled){background:var(--navy-deep)}
   .submit:active:not(:disabled){transform:scale(.98)}
   .submit:disabled{opacity:.35;cursor:not-allowed}
+  .submit.loading{opacity:.7;cursor:progress}
   .hint{font-size:12px;color:#9AA3B2}
+
+  /* 전송 실패 안내 */
+  .form-error{
+    display:none;
+    font-size:13.5px;color:var(--error);line-height:1.6;
+    background:#FDF3F2;border:1px solid #F0D4D0;border-radius:10px;
+    padding:11px 16px;max-width:480px;
+  }
+  .form-error.show{display:block}
 
   /* ── success state ── */
   .done{display:none;padding:56px 20px;text-align:center}
@@ -167,7 +196,7 @@
 
   footer{
     padding:18px 28px;display:flex;justify-content:space-between;align-items:center;
-    font-size:11.5px;color:#9AA3B2;border-top:1px solid var(--line);background:#fff;
+    font-size:1em;color:#9AA3B2;border-top:1px solid var(--line);background:#fff;
   }
   footer .mock{color:var(--gold);font-weight:700;letter-spacing:.08em}
 
@@ -187,7 +216,6 @@
   <div class="brand">
     <span class="logo"><img src="https://dgfud47pzj6gr.cloudfront.net/wp-content/uploads/2024/08/09015349/logo_blue-202408.png" alt="법무법인 미션 로고"></span>
   </div>
-  
 </header>
 
 <main>
@@ -207,8 +235,27 @@
       <span class="count" id="count">0 / 1000</span>
     </div>
 
-    <!-- 인적사항 + 동의 -->
+    <!-- 기업단계 + 인적사항 + 동의 -->
     <div class="details">
+
+      <fieldset class="stagepick">
+        <legend>기업 현황 <span class="opt">해당하는 항목 하나를 선택해 주세요(필수)</span></legend>
+        <div class="stage-chips" id="stageChips">
+          <input type="radio" name="stage" id="st1" value="예비창업">
+          <label for="st1">예비창업</label>
+          <input type="radio" name="stage" id="st2" value="국내법인만 보유">
+          <label for="st2">국내법인만 보유</label>
+          <input type="radio" name="stage" id="st3" value="해외법인만 보유">
+          <label for="st3">해외법인만 보유</label>
+          <input type="radio" name="stage" id="st4" value="플립 완료">
+          <label for="st4">플립 완료</label>
+          <input type="radio" name="stage" id="st5" value="국내외 법인 병렬 보유">
+          <label for="st5">국내외 법인 병렬 보유</label>
+          <input type="radio" name="stage" id="st6" value="기타">
+          <label for="st6">기타</label>
+        </div>
+      </fieldset>
+
       <div class="fields">
         <div class="field"><label for="name">이름 <span class="opt">필수</span></label>
           <input id="name" type="text" placeholder="홍길동" autocomplete="name"></div>
@@ -216,6 +263,12 @@
           <input id="org" type="text" placeholder="주식회사 OOO / 예비창업자" autocomplete="organization"></div>
         <div class="field full"><label for="email">이메일 <span class="opt">필수 · 답변 및 결과 공유용</span></label>
           <input id="email" type="email" placeholder="name@company.com" autocomplete="email"></div>
+      </div>
+
+      <!-- 허니팟: 봇 차단용. 사람에게는 보이지 않으며 값이 채워져 오면 스팸으로 처리 -->
+      <div class="hp-field" aria-hidden="true">
+        <label for="website">Website</label>
+        <input id="website" type="text" name="website" tabindex="-1" autocomplete="off">
       </div>
 
       <div class="consent">
@@ -228,21 +281,24 @@
           <div class="policy-body">
             <b>수집 항목:</b> 이름, 소속, 이메일, 질문 내용<br>
             <b>수집 목적:</b> 국외창업기업 관련 의견 수렴, 질의 답변, 정책연구 보고서 작성(통계·비식별 처리)<br>
-            <b>보유 기간:</b> 수집일로부터 O년 또는 목적 달성 시까지, 이후 지체 없이 파기<br>
+            <b>보유 기간:</b> 수집일로부터 1년 또는 목적 달성 시까지, 이후 지체 없이 파기<br>
             <b>동의 거부 권리:</b> 동의를 거부할 수 있으나, 거부 시 질문 제출이 제한됩니다.<br>
-            <span style="color:#C0392B">※ 목업용 예시 문구 — 실제 문구는 개인정보처리방침 확정 후 반영</span>
           </div>
         </details>
       </div>
     </div>
 
     <div class="actions">
+      <div class="form-error" id="formError" role="alert">
+        제출이 완료되지 않았습니다. 네트워크 연결을 확인하신 뒤 다시 시도해 주세요.<br>
+        문제가 계속되면 잠시 후에 다시 시도해 주세요. 작성하신 내용은 그대로 유지됩니다.
+      </div>
       <button class="submit" id="submit" disabled>제출하기</button>
     </div>
   </div>
 
   <!-- 제출 완료 -->
-  <div class="stage done" id="doneStage">
+  <div class="stage done" id="doneStage" role="status" tabindex="-1">
     <div class="mark">✓</div>
     <h2>질문이 접수되었습니다</h2>
     <p>남겨주신 질문은 검토 후 정책연구와 가이드북에 반영되며,<br>
@@ -257,13 +313,27 @@
 </footer>
 
 <script>
+  // ── 설정 ─────────────────────────────────────────────
+  // 앱스크립트 웹앱 배포 후 발급되는 URL을 여기에 넣으세요.
+  // 비워두면(현재) 목업 모드로 동작: 실제 전송 없이 성공 화면만 보여줍니다.
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzrm96R3wk-f2uUH9IIQTqaT3EEj4Nwi68vj4eo3WnRvHEc7DxpNecQz8VS8cexzxbx/exec';
+
+  // 폼의 선택지 문구 = 시트에 저장되는 값. 시트 2 코드값 탭과 글자 하나까지 동일해야 함.
+  // ─────────────────────────────────────────────────────
+
   const q = document.getElementById('question');
   const count = document.getElementById('count');
   const agree = document.getElementById('agree');
-  const submit = document.getElementById('submit');
-  const name = document.getElementById('name');
-  const org = document.getElementById('org');
-  const email = document.getElementById('email');
+  const submitBtn = document.getElementById('submit');
+  const nameInput = document.getElementById('name');
+  const orgInput = document.getElementById('org');
+  const emailInput = document.getElementById('email');
+  const honeypot = document.getElementById('website');
+  const formError = document.getElementById('formError');
+  const formStage = document.getElementById('formStage');
+  const doneStage = document.getElementById('doneStage');
+
+  let isSubmitting = false;
 
   function autosize(){
     q.style.height = 'auto';
@@ -272,37 +342,97 @@
   }
   q.addEventListener('input', () => { autosize(); validate(); });
 
-  // 예시 칩 클릭 → 입력창 채움
-  document.querySelectorAll('.chip').forEach(c => c.addEventListener('click', () => {
-    q.value = c.textContent;
-    autosize(); validate(); q.focus();
-  }));
-
-  [name, org, email, agree].forEach(el => el.addEventListener('input', validate));
+  [nameInput, orgInput, emailInput].forEach(el => el.addEventListener('input', validate));
   agree.addEventListener('change', validate);
+  document.getElementById('stageChips').addEventListener('change', validate);
+
+  function selectedStage(){
+    const r = document.querySelector('input[name="stage"]:checked');
+    return r ? r.value : '';
+  }
 
   function validate(){
     const ok = q.value.trim().length > 0
-      && name.value.trim() && org.value.trim()
-      && /.+@.+\..+/.test(email.value)
+      && selectedStage()
+      && nameInput.value.trim() && orgInput.value.trim()
+      && /.+@.+\..+/.test(emailInput.value)
       && agree.checked;
-    submit.disabled = !ok;
+    submitBtn.disabled = !ok || isSubmitting;
   }
 
-  // 목업: 실제로는 POST /api/questions → DB 저장
-  submit.addEventListener('click', () => {
-    document.getElementById('formStage').style.display = 'none';
-    const done = document.getElementById('doneStage');
-    done.style.display = 'block';
+  function setLoading(on){
+    isSubmitting = on;
+    submitBtn.classList.toggle('loading', on);
+    submitBtn.textContent = on ? '제출 중…' : '제출하기';
+    submitBtn.disabled = on;
+  }
+
+  function showDone(){
+    formStage.style.display = 'none';
+    doneStage.style.display = 'block';
+    doneStage.focus(); // 스크린리더에 상태 변화 전달
+  }
+
+  async function send(payload){
+    // Content-Type을 text/plain으로 보내면 CORS 사전요청(preflight) 없이
+    // 앱스크립트 doPost가 바로 받을 수 있습니다.
+    const res = await fetch(SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload)
+    });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    if (!data || data.ok !== true) throw new Error('server rejected');
+  }
+
+  submitBtn.addEventListener('click', async () => {
+    if (isSubmitting) return; // 더블클릭 방지
+    formError.classList.remove('show');
+
+    const payload = {
+      name: nameInput.value.trim(),
+      org: orgInput.value.trim(),
+      email: emailInput.value.trim(),
+      stage: selectedStage(),
+      question: q.value.trim().slice(0, 1000),
+      agree: agree.checked,
+      website: honeypot.value // 허니팟: 정상 사용자는 항상 빈 값
+    };
+
+    // 목업 모드: SCRIPT_URL 미설정 시 전송 없이 성공 화면
+    if (!SCRIPT_URL) {
+      showDone();
+      return;
+    }
+
+    setLoading(true);
+    try {
+      await send(payload);
+      setLoading(false);
+      showDone();
+    } catch (err) {
+      setLoading(false);
+      formError.classList.add('show');
+      validate(); // 버튼 상태 복구 — 입력값은 그대로이므로 재시도 가능
+    }
   });
 
   document.getElementById('again').addEventListener('click', () => {
-    document.getElementById('doneStage').style.display = 'none';
-    document.getElementById('formStage').style.display = 'block';
-    q.value = ''; agree.checked = false; autosize(); validate();
+    doneStage.style.display = 'none';
+    formStage.style.display = 'block';
+    q.value = '';
+    agree.checked = false;
+    honeypot.value = '';
+    const checked = document.querySelector('input[name="stage"]:checked');
+    if (checked) checked.checked = false;
+    formError.classList.remove('show');
+    autosize();
+    validate();
   });
 
   autosize();
+  validate();
 </script>
 </body>
 </html>
