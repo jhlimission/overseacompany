@@ -93,10 +93,10 @@
   /* 기업단계 라디오 칩 */
   .stagepick{border:0;margin-bottom:18px}
   .stagepick legend{
-    font-size:11.5px;font-weight:700;color:var(--navy);
+    font-size:1em;font-weight:700;color:var(--navy);
     letter-spacing:.06em;margin-bottom:8px;
   }
-  .stagepick legend .opt{font-weight:400;color:#9AA3B2;letter-spacing:0}
+  .stagepick legend .opt{font-weight:400;color:#9AA3B2;letter-spacing:0;font-size:0.9em;}
   .stage-chips{display:flex;flex-wrap:wrap;gap:8px}
   .stage-chips input[type=radio]{
     position:absolute;width:1px;height:1px;overflow:hidden;
@@ -117,14 +117,15 @@
   .fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}
   .fields .full{grid-column:1/-1}
   .field label{
-    display:block;font-size:11.5px;font-weight:700;color:var(--navy);
+    display:block;font-size:1em;font-weight:700;color:var(--navy);
     letter-spacing:.06em;margin-bottom:6px;
   }
-  .field label .opt{font-weight:400;color:#9AA3B2;letter-spacing:0}
+  .field label .opt{font-weight:400;color:#9AA3B2;letter-spacing:0;font-size:0.9em;}
   .field input{
     width:100%;font:inherit;font-size:15px;color:var(--ink);
     border:1px solid var(--line);border-radius:10px;background:#FBFCFE;
     padding:11px 12px;outline:0;transition:border-color .15s;
+    font-size:0.9em;
   }
   .field input:focus{border-color:var(--navy);background:#fff}
 
@@ -195,7 +196,7 @@
 
   footer{
     padding:18px 28px;display:flex;justify-content:space-between;align-items:center;
-    font-size:11.5px;color:#9AA3B2;border-top:1px solid var(--line);background:#fff;
+    font-size:1em;color:#9AA3B2;border-top:1px solid var(--line);background:#fff;
   }
   footer .mock{color:var(--gold);font-weight:700;letter-spacing:.08em}
 
@@ -238,7 +239,7 @@
     <div class="details">
 
       <fieldset class="stagepick">
-        <legend>기업 단계 <span class="opt">필수 · 해당하는 항목 하나를 선택해 주세요</span></legend>
+        <legend>기업 현황 <span class="opt">해당하는 항목 하나를 선택해 주세요(필수)</span></legend>
         <div class="stage-chips" id="stageChips">
           <input type="radio" name="stage" id="st1" value="예비창업">
           <label for="st1">예비창업</label>
